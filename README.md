@@ -60,5 +60,5 @@ The extracted and predicted data is stored in a **MongoDB** database and validat
 Once published to PyPI:
 
 ```bash
-pip install cirm-odms
+pip install cirm-odm
 ```
