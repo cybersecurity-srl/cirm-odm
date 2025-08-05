@@ -53,10 +53,12 @@ The extracted and predicted data is stored in a **MongoDB** database and validat
 ├── tests/                     # Unit tests for ODMs
 ├── pyproject.toml             # Project metadata and config
 └── README.md                  # Project documentation
-
+```
 
 ## Installation
 
 Once published to PyPI:
 
-*pip install cirm-odms*
+```bash
+pip install cirm-odms
+```
