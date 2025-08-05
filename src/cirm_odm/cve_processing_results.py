@@ -4,6 +4,7 @@ from beanie import Document
 from pydantic import BaseModel, Field
 from cpe_model import CPEMatchingCondition
 
+
 class CPEEntity(BaseModel):
     entity_group: str
     word: str
@@ -15,14 +16,16 @@ class CPEEntity(BaseModel):
 class ProductWithPart(BaseModel):
     name: str
     part: str
-    
+
+
 class CVEPredictions(BaseModel):
     cvss: Optional[float] = None
-    cwes: Optional[List[str]] = None 
+    cwes: Optional[List[str]] = None
     cpes: List[CPEEntity] = Field(default_factory=list)
     vendors: List[str] = Field(default_factory=list)
     products: List[ProductWithPart] = Field(default_factory=list)
     versions: List[str] = Field(default_factory=list)
+
 
 class CVEProcessingResults(Document):
     id: str

@@ -1,6 +1,7 @@
 from typing import List, Literal
-from cpe_model import CPEMatchingCondition
+from .cpe_model import CPEMatchingCondition
 from beanie import Document
+
 
 class CVEModel(Document):
     """
@@ -13,8 +14,8 @@ class CVEModel(Document):
         published_date (str): Date when the CVE was published.
         last_modified_date (str): Date when the CVE was last modified.
         cvss (float): Common Vulnerability Scoring System score.
-        cwe (List[str]): List of Common Weakness Enumeration IDs associated with the CVE.
-        cpe (List[CPEMatchingCondition]): List of CPE matching conditions related to the CVE.
+        cwe (List[str]): List of CWE IDs associated with the CVE.
+        cpe (List[CPEMatchingCondition]): List of CPE conditions.
     """
     id: str
     description: str
@@ -23,7 +24,7 @@ class CVEModel(Document):
     last_modified_date: str
     cvss: float
     cwe: List[str]
-    cpe: List[CPEMatchingCondition] 
+    cpe: List[CPEMatchingCondition]
 
     class Settings:
         """
@@ -35,7 +36,7 @@ class CVEModel(Document):
             id_type (type): Type of the document's ID field.
         """
         name = 'cves'
-        use_revision = False  
+        use_revision = False
         id_type = str
 
     class Config:
@@ -43,6 +44,7 @@ class CVEModel(Document):
         Pydantic configuration for the CVEModel.
 
         Attributes:
-            arbitrary_types_allowed (bool): Flag indicating whether to allow arbitrary types.
+            arbitrary_types_allowed (bool):
+            Flag indicating whether to allow arbitrary types.
         """
         arbitrary_types_allowed = True
