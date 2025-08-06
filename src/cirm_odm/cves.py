@@ -8,14 +8,14 @@ class CVEModel(Document):
     Represents a Common Vulnerabilities and Exposures (CVE) document.
 
     Attributes:
-        id (str): Unique identifier for the CVE.
-        description (str): Detailed description of the CVE.
-        status (Literal['Rejected', 'noRejected']): Current status of the CVE.
-        published_date (str): Date when the CVE was published.
-        last_modified_date (str): Date when the CVE was last modified.
-        cvss (float): Common Vulnerability Scoring System score.
-        cwe (List[str]): List of CWE IDs associated with the CVE.
-        cpe (List[CPEMatchingCondition]): List of CPE conditions.
+        id : Unique identifier for the CVE.
+        description : Detailed description of the CVE.
+        status : Current status of the CVE.
+        published_date : Date when the CVE was published.
+        last_modified_date : Date when the CVE was last modified.
+        cvss : Common Vulnerability Scoring System score.
+        cwe : List of CWE IDs associated with the CVE.
+        cpe : List of CPE conditions.
     """
     id: str
     description: str
@@ -31,9 +31,9 @@ class CVEModel(Document):
         Configuration settings for the CVEModel document.
 
         Attributes:
-            name (str): Name of the MongoDB collection.
-            use_revision (bool): Flag indicating whether to use revisioning.
-            id_type (type): Type of the document's ID field.
+            name : Name of the MongoDB collection.
+            use_revision : Flag indicating whether to use revisioning.
+            id_type : Type of the document's ID field.
         """
         name = 'cves'
         use_revision = False
@@ -44,7 +44,7 @@ class CVEModel(Document):
         Pydantic configuration for the CVEModel.
 
         Attributes:
-            arbitrary_types_allowed (bool):
-            Flag indicating whether to allow arbitrary types.
+            arbitrary_types_allowed : Flag indicating whether
+            to allow arbitrary types.
         """
         arbitrary_types_allowed = True

@@ -7,18 +7,18 @@ class CPEModel(BaseModel):
     Represents a Common Platform Enumeration (CPE) string.
 
     Attributes:
-        part (str): The part of the CPE (e.g., 'a' for application).
-        vendor (str): The vendor name.
-        product (str): The product name.
-        version (str): The product version.
-        update (str): The update version.
-        edition (str): The edition of the product.
-        language (str): The language of the product.
-        sw_edition (str): The software edition.
-        target_sw (str): The target software.
-        target_hw (str): The target hardware.
-        other (str): Other information.
-        raw (str): The raw CPE string.
+        part : The part of the CPE (e.g., 'a' for application).
+        vendor : The vendor name.
+        product : The product name.
+        version : The product version.
+        update : The update version.
+        edition : The edition of the product.
+        language : The language of the product.
+        sw_edition : The software edition.
+        target_sw : The target software.
+        target_hw : The target hardware.
+        other : Other information.
+        raw : The raw CPE string.
     """
     part: str
     vendor: str
@@ -59,10 +59,10 @@ class CPEMatchingCondition(BaseModel):
     Represents a condition for matching CPE strings.
 
     Attributes:
-        cpe_match (List[CPEMatch]): The list of CPE matches.
+        cpe_match : The list of CPE matches.
         children : The child conditions.
-        operator (Literal['AND', 'OR']): The operator to combine conditions.
-        negate (bool): Whether to negate the condition.
+        operator : The operator to combine conditions.
+        negate : Whether to negate the condition.
     """
     cpe_match: List[CPEMatch]
     children: Optional[List["CPEMatchingCondition"]] = None

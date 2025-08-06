@@ -6,6 +6,9 @@ from cpe_model import CPEMatchingCondition
 
 
 class CPEEntity(BaseModel):
+    """
+    Represents a predicted entity related to a CPE string.
+    """
     entity_group: str
     word: str
     score: float
@@ -14,11 +17,21 @@ class CPEEntity(BaseModel):
 
 
 class ProductWithPart(BaseModel):
+    """
+    Represents a product name and its corresponding CPE part (a, o, h).
+    """
     name: str
     part: str
 
 
 class CVEPredictions(BaseModel):
+    """
+    Contains predicted information for a CVE, including CVSS score,
+    CWE identifiers, and CPE-related entities
+    such as vendors, products, and versions.
+    Used when actual data is unavailable
+    or as supplementary model-generated data.
+    """
     cvss: Optional[float] = None
     cwes: Optional[List[str]] = None
     cpes: List[CPEEntity] = Field(default_factory=list)
@@ -28,6 +41,10 @@ class CVEPredictions(BaseModel):
 
 
 class CVEProcessingResults(Document):
+    """
+    Stores final CVE processing output, including actual
+    or predicted CVSS, CWE, and CPE.
+    """
     id: str
     cvss: float
     cwe: List[str]
