@@ -2,7 +2,7 @@ from typing import List, Optional
 from datetime import datetime
 from beanie import Document
 from pydantic import BaseModel, Field
-from cpe_model import CPEMatchingCondition
+from .cpe_model import CPEMatchingCondition
 
 
 class CPEEntity(BaseModel):
