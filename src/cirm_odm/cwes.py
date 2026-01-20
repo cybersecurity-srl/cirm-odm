@@ -33,27 +33,81 @@ class Detection(BaseModel):
     effectiveness_notes: Optional[str] = None
 
 
-class CWEModel(Document):
+class Mitigation(BaseModel):
     """
-    Represents a Common Weakness Enumeration (CWE) document.
+    Represents a potential mitigation associated with a CWE weakness.
+
+    This model corresponds to an individual mitigation entry defined in the CWE
+    specification and describes a possible action that can reduce or prevent
+    the exploitation of a weakness.
 
     Attributes:
-        id : Unique identifier for the CWE.
-        name : Name of the CWE.
-        status : Current status of the CWE.
-        description : A detailed description of the CWE.
-        related_cwe_ids : List of IDs of related CWEs.
-        detection : Detection method associated with the CWE.
-        created_at : Timestamp when the CWE was created.
-        last_update : Timestamp of the last update to the CWE.
+        phase (Optional[str]):
+            The software development life cycle phase during which this
+            mitigation may be applied (e.g., Architecture and Design,
+            Implementation).
+
+        description (Optional[str]):
+            A detailed description of the mitigation, including its strengths,
+            limitations, and relevant considerations.
+
+        effectiveness (Optional[str]):
+            A qualitative summary of how effective the mitigation may be in
+            preventing or reducing the impact of the weakness.
+
+        effectiveness_notes (Optional[str]):
+            Additional notes providing further context on the effectiveness of
+            the mitigation.
+    """
+    phase: Optional[str] = None
+    description: Optional[str] = None
+    effectiveness: Optional[str] = None
+    effectiveness_notes: Optional[str] = None
+    
+    
+class CWEModel(Document):
+    """
+    Represents a Common Weakness Enumeration (CWE) document stored in MongoDB.
+
+    Attributes:
+        id (str):
+            Unique identifier of the CWE (e.g., CWE-79).
+
+        name (str):
+            Human-readable name of the CWE.
+
+        usage (Optional[str]):
+            Usage information or mapping notes associated with the CWE.
+
+        status (str):
+            Current status of the CWE (e.g., Draft, Incomplete, Stable).
+
+        description (Optional[str]):
+            A detailed textual description of the weakness.
+
+        related_cwe_ids (List[str]):
+            List of identifiers of CWEs related to this weakness.
+
+        detection (Optional[List[Detection]]):
+            Detection methods that can be used to identify the weakness.
+
+        mitigation (Optional[List[Mitigation]]):
+            Potential mitigations applicable to the weakness.
+
+        created_at (Optional[str]):
+            Date when the CWE was initially submitted.
+
+        last_update (Optional[str]):
+            Date of the most recent modification to the CWE.
     """
     id: str
     name: str
+    usage: Optional[str] = None
     status: str
     description: Optional[str] = None
     related_cwe_ids: List[str]
-    detection: Optional[Detection] = None
-    usage: Optional[str] = None
+    detection: Optional[List[Detection]] = None
+    mitigation: Optional[List[Mitigation]] = None
     created_at: Optional[str] = None
     last_update: Optional[str] = None
 
