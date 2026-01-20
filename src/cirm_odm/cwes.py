@@ -5,18 +5,32 @@ from beanie import Document
 
 class Detection(BaseModel):
     """
-    Represents a detection method for a Common Weakness Enumeration (CWE).
+    Represents a detection method associated with a Common Weakness Enumeration (CWE).
 
     Attributes:
-        detection_id : Unique identifier for the detection.
-        method : The method used for detection.
-        description : A description of the detection method.
-        effectiveness : The effectiveness rating of the detection method.
+        detection_id (Optional[str]):
+            Optional identifier used internally by the CWE team to uniquely
+            identify the detection method.
+
+        method (Optional[str]):
+            The technique or approach used to detect the weakness.
+
+        description (Optional[str]):
+            A textual description of how the detection method works.
+
+        effectiveness (Optional[str]):
+            An assessment of how effective the detection method may be in
+            identifying the associated weakness.
+
+        effectiveness_notes (Optional[str]):
+            Additional notes describing the strengths and limitations of the
+            detection method.
     """
-    detection_id: str
+    detection_id: Optional[str] = None
     method: Optional[str] = None
     description: Optional[str] = None
     effectiveness: Optional[str] = None
+    effectiveness_notes: Optional[str] = None
 
 
 class CWEModel(Document):
