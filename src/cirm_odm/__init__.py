@@ -1,5 +1,5 @@
 """Python Package Template"""
-from .cpe_model import CPEModel, CPEMatch, CPEMatchingCondition  # noqa: F401
+from .cpe_model import CPEMatch, CPENode, CVEConfiguration  # noqa: F401
 from .cves import CVEModel  # noqa: F401
 from .cve_processing_results import CPEEntity  # noqa: F401
 from .cve_processing_results import CVEProcessingResults  # noqa: F401

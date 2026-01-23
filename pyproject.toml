@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "cirm-odm"
-version = "0.1.4"
+version = "0.1.5"
 description = "ODM models for CVE, CWE, and CPE management"
 authors = [
     { name = "CyberSecurity S.r.l." }
