@@ -1,5 +1,5 @@
 from typing import List, Literal
-from app.odm.cpe_model import CVEConfiguration
+from .cpe_model import CVEConfiguration
 from beanie import Document
 
 
