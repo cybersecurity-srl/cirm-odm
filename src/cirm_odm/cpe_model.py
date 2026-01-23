@@ -1,70 +1,96 @@
 from typing import List, Optional, Literal
 from pydantic import BaseModel
-
-
-class CPEModel(BaseModel):
-    """
-    Represents a Common Platform Enumeration (CPE) string.
-
-    Attributes:
-        part : The part of the CPE (e.g., 'a' for application).
-        vendor : The vendor name.
-        product : The product name.
-        version : The product version.
-        update : The update version.
-        edition : The edition of the product.
-        language : The language of the product.
-        sw_edition : The software edition.
-        target_sw : The target software.
-        target_hw : The target hardware.
-        other : Other information.
-        raw : The raw CPE string.
-    """
-    part: str
-    vendor: str
-    product: str
-    version: str
-    update: str
-    edition: str
-    language: str
-    sw_edition: str
-    target_sw: str
-    target_hw: str
-    other: str
-    raw: str
+from pydantic import Field
 
 
 class CPEMatch(BaseModel):
     """
-    Represents a match for a CPE string.
+    Represents a single CPE match condition as defined by the NVD configuration logic.
+
+    A CPEMatch may refer either to:
+    - a specific CPE 2.3 string, or
+    - a version range expressed through start/end constraints.
+
+    When the match represents a version range, the field `expanded_cpes`
+    contains the list of concrete CPE 2.3 identifiers obtained by expanding
+    the range via the NVD CPE Match API (matchCriteriaId).
 
     Attributes:
-        cpe : The CPE model.
-        vulnerable : Whether the CPE is vulnerable.
-        version_start_including : The starting version, inclusive.
-        version_start_excluding : The starting version, exclusive.
-        version_end_excluding : The ending version, exclusive.
-        version_end_including : The ending version, inclusive.
+        vulnerable:
+            Indicates whether the matched CPE is affected by the vulnerability.
+
+        criteria:
+            The original CPE 2.3 match criteria string as provided by NVD.
+            This string may include wildcards or version ranges.
+
+        match_criteria_id:
+            Identifier of the match criteria in the NVD database.
+            It can be used to resolve version ranges into concrete CPEs.
+
+        version_start_including:
+            Lower bound of the affected version range (inclusive), if specified.
+
+        version_start_excluding:
+            Lower bound of the affected version range (exclusive), if specified.
+
+        version_end_including:
+            Upper bound of the affected version range (inclusive), if specified.
+
+        version_end_excluding:
+            Upper bound of the affected version range (exclusive), if specified.
+
+        expanded_cpes:
+            List of concrete CPE 2.3 strings derived from the version range.
+            This field is populated only when a version range is present;
+            otherwise it may be empty.
     """
-    cpe: CPEModel
     vulnerable: bool
+    criteria: str
+    match_criteria_id: str
     version_start_including: Optional[str] = None
     version_start_excluding: Optional[str] = None
     version_end_excluding: Optional[str] = None
     version_end_including: Optional[str] = None
+    expanded_cpes: List[str] = Field(default_factory=list)
 
 
-class CPEMatchingCondition(BaseModel):
+class CPENode(BaseModel):
     """
-    Represents a condition for matching CPE strings.
+    Represents a logical node in the CVE CPE configuration tree.
+
+    A CPENode combines one or more CPEMatch elements using a logical operator
+    (AND / OR) and may recursively contain child nodes, forming a tree
+    structure equivalent to the one defined by the NVD CVE configuration model.
 
     Attributes:
-        cpe_match : The list of CPE matches.
-        children : The child conditions.
-        operator : The operator to combine conditions.
-        negate : Whether to negate the condition.
+        operator:
+            Logical operator used to combine CPE matches and/or child nodes.
+
+        negate:
+            If True, the logical result of this node is negated.
+
+        cpe_match:
+            List of CPEMatch conditions associated with this node.
+
+        children:
+            Optional list of child CPENodes, allowing recursive logical
+            expressions.
     """
-    cpe_match: List[CPEMatch]
-    children: Optional[List["CPEMatchingCondition"]] = None
     operator: Literal['AND', 'OR']
-    negate: bool
+    negate: bool = False
+    cpe_match: Optional[List[CPEMatch]] = None
+    children: Optional[List["CPENode"]] = None
+    
+CPENode.model_rebuild()
+
+
+class CVEConfiguration(BaseModel):
+    """
+    Represents a top-level CPE configuration for a CVE entry.
+
+    A configuration consists of one or more logical nodes that describe
+    the affected platforms and software combinations for the vulnerability,
+    following the structure defined by the NVD.
+    """
+    operator: Optional[Literal['AND', 'OR']] = None
+    nodes: List[CPENode] = Field(default_factory=list)
