@@ -53,7 +53,6 @@ class CVEModel(Document):
     cwe: List[str]
     cpe: List[CVEConfiguration]
 
-
     class Settings:
         """
         Beanie document settings for the CVEModel.

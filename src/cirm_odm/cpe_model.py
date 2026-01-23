@@ -5,7 +5,7 @@ from pydantic import Field
 
 class CPEMatch(BaseModel):
     """
-    Represents a single CPE match condition as defined by the NVD configuration logic.
+    Represents a single CPE match condition.
 
     A CPEMatch may refer either to:
     - a specific CPE 2.3 string, or
@@ -28,16 +28,16 @@ class CPEMatch(BaseModel):
             It can be used to resolve version ranges into concrete CPEs.
 
         version_start_including:
-            Lower bound of the affected version range (inclusive), if specified.
+            Lower bound of the affected version range (inclusive).
 
         version_start_excluding:
-            Lower bound of the affected version range (exclusive), if specified.
+            Lower bound of the affected version range (exclusive).
 
         version_end_including:
-            Upper bound of the affected version range (inclusive), if specified.
+            Upper bound of the affected version range (inclusive).
 
         version_end_excluding:
-            Upper bound of the affected version range (exclusive), if specified.
+            Upper bound of the affected version range (exclusive).
 
         expanded_cpes:
             List of concrete CPE 2.3 strings derived from the version range.
@@ -80,7 +80,8 @@ class CPENode(BaseModel):
     negate: bool = False
     cpe_match: Optional[List[CPEMatch]] = None
     children: Optional[List["CPENode"]] = None
-    
+
+
 CPENode.model_rebuild()
 
 

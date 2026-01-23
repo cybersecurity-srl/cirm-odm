@@ -5,7 +5,7 @@ from beanie import Document
 
 class Detection(BaseModel):
     """
-    Represents a detection method associated with a Common Weakness Enumeration (CWE).
+    Represents a detection method associated with a CWE.
 
     Attributes:
         detection_id (Optional[str]):
@@ -63,8 +63,8 @@ class Mitigation(BaseModel):
     description: Optional[str] = None
     effectiveness: Optional[str] = None
     effectiveness_notes: Optional[str] = None
-    
-    
+
+
 class CWEModel(Document):
     """
     Represents a Common Weakness Enumeration (CWE) document stored in MongoDB.

@@ -2,7 +2,7 @@ from typing import List, Optional
 from datetime import datetime
 from beanie import Document
 from pydantic import BaseModel, Field
-from .cpe_model import CPEMatchingCondition
+from .cpe_model import CVEConfiguration
 
 
 class CPEEntity(BaseModel):
@@ -48,7 +48,7 @@ class CVEProcessingResults(Document):
     id: str
     cvss: float
     cwe: List[str]
-    cpe: List[CPEMatchingCondition]
+    cpe: List[CVEConfiguration]
     predictions: CVEPredictions = Field(default_factory=CVEPredictions)
     published_date: Optional[datetime] = None
     last_modified_date: Optional[datetime] = None
