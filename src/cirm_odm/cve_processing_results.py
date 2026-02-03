@@ -4,7 +4,18 @@ from beanie import Document
 from pydantic import BaseModel, Field
 from .cpe_model import CVEConfiguration
 
+class GeneratedCPECriteria(BaseModel):
+    """
+    A structured representation of a generated CPE candidate, including
+    a base criteria CPE string (with wildcards) and optional version range constraints.
+    """
+    criteria: str
 
+    version_start_including: Optional[str] = None
+    version_start_excluding: Optional[str] = None
+    version_end_including: Optional[str] = None
+    version_end_excluding: Optional[str] = None
+    
 class CPEEntity(BaseModel):
     """
     Represents a predicted entity related to a CPE string.
@@ -38,6 +49,7 @@ class CVEPredictions(BaseModel):
     vendors: List[str] = Field(default_factory=list)
     products: List[ProductWithPart] = Field(default_factory=list)
     versions: List[str] = Field(default_factory=list)
+    generated_cpe: List[GeneratedCPECriteria] = Field(default_factory=list)
 
 
 class CVEProcessingResults(Document):
