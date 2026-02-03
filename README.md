@@ -1,4 +1,6 @@
-CIRM ODMs
+[![Python CI](https://github.com/cybersecurity-srl/cirm-odm/actions/workflows/CI.yml/badge.svg)](https://github.com/cybersecurity-srl/cirm-odm/actions/workflows/CI.yml)
+
+**CIRM ODMs**
 
 **CIRM ODMs** is a Python package developed by **CyberSecurity S.r.l.** to centralize and validate data models used in the **CIRM** project — a framework for managing cyber risk, with a specific focus on software vulnerability management.
 
